@@ -6,26 +6,26 @@ import (
 	"github.com/ptflp/godecoder"
 )
 
-var decode decoder.Decoder
+var decoder godecoder.Decoder
 
 func init() {
 	config := jsoniter.Config{
 		EscapeHTML: true,
-		TagKey: "mapper",
+		TagKey:     "mapper",
 	}
 
-	decode = decoder.NewDecoder()
+	decoder = godecoder.NewDecoder(config)
 }
 
 func MapStructs(dest, src interface{}) error {
 	var b bytes.Buffer
 
-	err := d.Encode(&b, src)
+	err := decoder.Encode(&b, src)
 	if err != nil {
 		return err
 	}
 
-	err = d.Decode(&b, dest)
+	err = decoder.Decode(&b, dest)
 	if err != nil {
 		return err
 	}
